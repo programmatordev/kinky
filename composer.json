@@ -23,7 +23,7 @@
 	},
     "require-dev": {
         "getkirby/cms": "^4.7",
-		"symfony/var-dumper": "^7.2"
+        "symfony/var-dumper": "^7.2"
     },
 	"autoload": {
 		"psr-4": {
@@ -35,10 +35,10 @@
             "ProgrammatorDev\\KirbyInky\\Test\\": "tests/"
         }
     },
-	"config": {
-		"optimize-autoloader": true,
-		"allow-plugins": {
-			"getkirby/composer-installer": true
-		}
-	}
+    "config": {
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "getkirby/composer-installer": true
+        }
+    }
 }
