@@ -1,0 +1,44 @@
+{
+	"name": "programmatordev/kirby-inky",
+	"description": "Inky email templating language for Kirby CMS",
+	"type": "kirby-plugin",
+    "license": "MIT",
+    "version": "0.1.0",
+    "keywords": [],
+    "homepage": "https://github.com/programmatordev/kirby-inky",
+    "support": {
+        "issues": "https://github.com/programmatordev/kirby-inky/issues",
+        "source": "https://github.com/programmatordev/kirby-inky"
+    },
+	"authors": [
+		{
+			"name": "André Pimpão",
+			"email": "a.pimpao@programmator.dev",
+            "homepage": "https://programmator.dev"
+		}
+	],
+	"require": {
+        "php": ">=8.2.0",
+		"getkirby/composer-installer": "^1.2"
+	},
+    "require-dev": {
+        "getkirby/cms": "^4.7",
+		"symfony/var-dumper": "^7.2"
+    },
+	"autoload": {
+		"psr-4": {
+			"ProgrammatorDev\\KirbyInky\\": "src/"
+		}
+	},
+    "autoload-dev": {
+        "psr-4": {
+            "ProgrammatorDev\\KirbyInky\\Test\\": "tests/"
+        }
+    },
+	"config": {
+		"optimize-autoloader": true,
+		"allow-plugins": {
+			"getkirby/composer-installer": true
+		}
+	}
+}
