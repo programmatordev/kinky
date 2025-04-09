@@ -1,14 +1,14 @@
 {
-  "name": "programmatordev/kirby-inky",
+  "name": "programmatordev/kinky",
   "description": "Inky email templating language for Kirby CMS",
   "type": "kirby-plugin",
   "license": "MIT",
   "version": "0.1.0",
   "keywords": [],
-  "homepage": "https://github.com/programmatordev/kirby-inky",
+  "homepage": "https://github.com/programmatordev/kinky",
   "support": {
-    "issues": "https://github.com/programmatordev/kirby-inky/issues",
-    "source": "https://github.com/programmatordev/kirby-inky"
+    "issues": "https://github.com/programmatordev/kinky/issues",
+    "source": "https://github.com/programmatordev/kinky"
   },
   "authors": [
     {
@@ -20,7 +20,9 @@
   "require": {
     "php": ">=8.2.0",
     "getkirby/composer-installer": "^1.2",
-    "lorenzo/pinky": "^1.1"
+    "lorenzo/pinky": "^1.1",
+    "tijsverkoyen/css-to-inline-styles": "^2.3",
+    "ext-dom": "*"
   },
   "require-dev": {
     "getkirby/cms": "^4.7",
@@ -28,12 +30,12 @@
   },
   "autoload": {
     "psr-4": {
-      "ProgrammatorDev\\KirbyInky\\": "src/"
+      "ProgrammatorDev\\Kinky\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ProgrammatorDev\\KirbyInky\\Test\\": "tests/"
+      "ProgrammatorDev\\Kinky\\Test\\": "tests/"
     }
   },
   "config": {
