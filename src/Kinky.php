@@ -33,37 +33,34 @@ class Kinky
      */
     private function transformHtml(string $html): string
     {
-        // get Inky base style to inject and inline in HTML
-        $baseCss = F::read(__DIR__ . '/../assets/styles/foundation-emails.css');
+        // get Inky base CSS to inject in HTML
+        $inkyCss = F::read(__DIR__ . '/../assets/styles/foundation-emails.css');
 
         // transpile Inky template
         $domDocument = Pinky\transformString($html);
 
-        // create Content-Type meta element so charset is detected correctly when inlining CSS
+        // create Content-Type <meta> element so charset is detected correctly when inlining CSS
         // https://github.com/tijsverkoyen/CssToInlineStyles?tab=readme-ov-file#known-issues
         $metaContentTypeElement = $domDocument->createElement('meta');
         $metaContentTypeElement->setAttribute('http-equiv', 'Content-Type');
         $metaContentTypeElement->setAttribute('content', 'text/html; charset=utf-8');
 
-        // create style element with Inky base style
-        $styleElement = $domDocument->createElement('style', $baseCss);
-        $styleElement->setAttribute('type', 'text/css');
+        // create viewport <meta>
+        $metaViewportElement = $domDocument->createElement('meta');
+        $metaViewportElement->setAttribute('name', 'viewport');
+        $metaViewportElement->setAttribute('content', 'width=device-width');
 
-        // Pinky transpiler does not create the head element
-        // so we have to do it ourselves to append the meta and style elements
-        $headElement = $domDocument->createElement('head');
-        $headElement->appendChild($metaContentTypeElement);
-        $headElement->appendChild($styleElement);
+        // create <style> element with Inky base CSS
+        $styleElement = $domDocument->createElement('style', sprintf("\n%s", $inkyCss));
 
-        // prepend the head element to the document
-        $domDocument->documentElement->prepend($headElement);
+        // prepend the <meta> and <style> elements to the document
+        // this may seem a little bit quirky to add <head> specific elements directly in the document,
+        // but the transpiler and inliner will automatically wrap <meta> and <style> elements in a <head> element,
+        // so there is no need to do it ourselves, and opens the possibility to include custom <style>s directly in the template
+        $domDocument->documentElement->prepend($metaContentTypeElement, $metaViewportElement, $styleElement);
 
-        // transpiled HTML
-        $html = $domDocument->saveHTML();
-        // inline Inky base style for best results in Gmail and Outlook
-        $html = $this->cssInliner->convert($html, $baseCss);
-
-        return $html;
+        // inline Inky base CSS (for best results in Gmail and Outlook)
+        return $this->cssInliner->convert($domDocument->saveHTML());
     }
 
     public static function instance(array $options = []): self
