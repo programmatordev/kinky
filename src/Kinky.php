@@ -2,19 +2,68 @@
 
 namespace ProgrammatorDev\Kinky;
 
+use Kirby\Cms\App;
+use Kirby\Email\Email;
+use Kirby\Exception\InvalidArgumentException;
 use Kirby\Filesystem\F;
 use Pinky;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 class Kinky
 {
+    private App $kirby;
+
     private CssToInlineStyles $cssInliner;
 
     private static ?self $instance = null;
 
     public function __construct(array $options = [])
     {
+        $this->kirby = kirby();
         $this->cssInliner = new CssToInlineStyles();
+    }
+
+    /**
+     * @throws \DOMException
+     * @throws InvalidArgumentException
+     */
+    public function email(mixed $preset = [], array $props = []): Email
+    {
+        // find in which variable props are found and build props for kinky
+        if (is_array($preset)) {
+            $preset = $this->buildEmailProps($preset);
+        }
+        else {
+            $props = $this->buildEmailProps($props);
+        }
+
+        return $this->kirby->email($preset, $props);
+    }
+
+    /**
+     * @throws \DOMException
+     * @throws InvalidArgumentException
+     */
+    private function buildEmailProps(array $props): array
+    {
+        // try to find data and template properties if they exist
+        // these will be used for the transform
+        $data = $props['data'] ?? [];
+        $template = $props['template'] ?? null;
+
+        // kinky requires a template to be set
+        if ($template === null) {
+            throw new InvalidArgumentException('The property "template" is required');
+        }
+
+        // set body with transpiled template
+        $props['body']['html'] = $this->transformTemplate($template, $data);
+
+        // template property must be removed from props at this point
+        // otherwise kirby will ignore the body property
+        unset($props['template']);
+
+        return $props;
     }
 
     /**
@@ -22,7 +71,7 @@ class Kinky
      */
     public function transformTemplate(string $name, array $data = []): string
     {
-        $template = kirby()->template(sprintf('emails/%s', $name));
+        $template = $this->kirby->template(sprintf('emails/%s', $name));
         $html = $template->render($data);
 
         return $this->transformHtml($html);
@@ -45,7 +94,7 @@ class Kinky
         $metaContentTypeElement->setAttribute('http-equiv', 'Content-Type');
         $metaContentTypeElement->setAttribute('content', 'text/html; charset=utf-8');
 
-        // create viewport <meta>
+        // create viewport <meta> element
         $metaViewportElement = $domDocument->createElement('meta');
         $metaViewportElement->setAttribute('name', 'viewport');
         $metaViewportElement->setAttribute('content', 'width=device-width');
