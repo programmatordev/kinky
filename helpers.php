@@ -2,7 +2,7 @@
 
 use ProgrammatorDev\Kinky\Kinky;
 
-function kinky(array $options = []): Kinky
+function kinky(): Kinky
 {
-    return Kinky::instance($options);
+    return Kinky::instance();
 }

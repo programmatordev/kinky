@@ -17,7 +17,7 @@ class Kinky
 
     private static ?self $instance = null;
 
-    public function __construct(array $options = [])
+    public function __construct()
     {
         $this->kirby = kirby();
         $this->cssInliner = new CssToInlineStyles();
@@ -29,7 +29,7 @@ class Kinky
      */
     public function email(mixed $preset = [], array $props = []): Email
     {
-        // find in which variable props are found and build props for kinky
+        // find in which variable props are and build them for kinky
         if (is_array($preset)) {
             $preset = $this->buildEmailProps($preset);
         }
@@ -82,9 +82,6 @@ class Kinky
      */
     private function transformHtml(string $html): string
     {
-        // get Inky base CSS to inject in HTML
-        $inkyCss = F::read(__DIR__ . '/../assets/styles/foundation-emails.css');
-
         // transpile Inky template
         $domDocument = Pinky\transformString($html);
 
@@ -99,11 +96,13 @@ class Kinky
         $metaViewportElement->setAttribute('name', 'viewport');
         $metaViewportElement->setAttribute('content', 'width=device-width');
 
+        // get Inky base CSS to inject in HTML
+        $inkyCss = F::read(__DIR__ . '/../assets/styles/foundation-emails.css');
         // create <style> element with Inky base CSS
         $styleElement = $domDocument->createElement('style', sprintf("\n%s", $inkyCss));
 
         // prepend the <meta> and <style> elements to the document
-        // this may seem a little bit quirky to add <head> specific elements directly in the document,
+        // this may seem a little bit weird to add <head> specific elements directly in the document,
         // but the transpiler and inliner will automatically wrap <meta> and <style> elements in a <head> element,
         // so there is no need to do it ourselves, and opens the possibility to include custom <style>s directly in the template
         $domDocument->documentElement->prepend($metaContentTypeElement, $metaViewportElement, $styleElement);
@@ -112,13 +111,13 @@ class Kinky
         return $this->cssInliner->convert($domDocument->saveHTML());
     }
 
-    public static function instance(array $options = []): self
+    public static function instance(): self
     {
         if (self::$instance !== null) {
             return self::$instance;
         }
 
-        self::$instance = new self($options);
+        self::$instance = new self();
 
         return self::$instance;
     }
