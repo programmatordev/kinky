@@ -4,7 +4,7 @@
   "type": "kirby-plugin",
   "license": "MIT",
   "version": "0.1.0",
-  "keywords": [],
+  "keywords": ["kirby", "kirby-cms", "kirby-plugin", "inky", "email", "email-template"],
   "homepage": "https://github.com/programmatordev/kinky",
   "support": {
     "issues": "https://github.com/programmatordev/kinky/issues",
