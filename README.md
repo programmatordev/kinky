@@ -1,8 +1,8 @@
 # Kinky
 
 [Inky](https://get.foundation/emails/docs/inky.html) email templating language for [Kirby CMS](https://getkirby.com/).
-Converts simple HTML tags into the complex table required for emails.
-Oh là là!
+
+Converts simple HTML tags into the complex table required for emails. Oh là là!
 
 ## Table of Contents
 
@@ -11,12 +11,13 @@ Oh là là!
 - [Usage](#usage)
   - [transformTemplate](#transformtemplate)
   - [email](#email)
+- [Cookbook](#cookbook)
 
 ## TL;DR
 
-Building HTML emails is pain.
+Building HTML emails is painful.
 
-You’re stuck using archaic table-based layouts, and you constantly have to fight against inconsistent rendering across outdated email clients (like Outlook).
+You're stuck using archaic table-based layouts, and you constantly have to fight against inconsistent rendering across outdated email clients (like Outlook).
 Modern web standards? Mostly ignored. 
 
 To make life easier, this plugin was created so you can write cleaner code and still get reliable results across all major email clients.
@@ -25,14 +26,14 @@ To make life easier, this plugin was created so you can write cleaner code and s
 
 This plugin streamlines HTML email development by integrating a transpiler and inliner workflow built around [Inky](https://get.foundation/emails/docs/inky.html). 
 
-It uses a [transpiler](https://github.com/lorenzo/pinky) that converts [Inky](https://get.foundation/emails/docs/inky.html)’s custom components into table-based HTML, 
+It uses a [transpiler](https://github.com/lorenzo/pinky) that converts [Inky](https://get.foundation/emails/docs/inky.html)'s custom components into table-based HTML, 
 ensuring compatibility with legacy email clients. 
 
 After that, it passes the output through a [CSS inliner](https://github.com/tijsverkoyen/CssToInlineStyles)
-that merges both [Inky](https://get.foundation/emails/docs/inky.html)’s default styles and any custom CSS into inline styles.
+that merges both [Inky](https://get.foundation/emails/docs/inky.html)'s default styles and any custom CSS into inline styles.
 
-The result is clean, reliable HTML emails that render consistently across major clients 
-like Outlook, Gmail, and Apple Mail — without giving up modern development convenience — at runtime.
+The result is clean, reliable HTML emails that render consistently across major clients
+like Outlook, Gmail, and Apple Mail — without giving up modern development convenience.
 
 ### Example
 
@@ -51,7 +52,7 @@ Simple usage of Inky base components (it is recommended to include the `body` cl
 </wrapper>
 ```
 
-Transpiled HTML (cleaned example without the whole document and CSS inlining):
+Transformed HTML (clean example without the whole document and CSS inlining):
 
 ```html
 <table class="body wrapper" align="center">
@@ -92,7 +93,7 @@ Transpiled HTML (cleaned example without the whole document and CSS inlining):
 
 ## Usage
 
-A global `kinky()` method is available to develop and send emails.
+A global `kinky()` method is available to create and send emails.
 
 ### `transformTemplate`
 
@@ -102,11 +103,13 @@ kinky()->transformTemplate(string $template, array $data = []): string
 
 Returns the final transformed HTML from the given `$template`.
 Take into account that email templates must be located in the `/site/templates/emails/` directory.
-Check the documentation regarding how emails work in [Kirby](https://getkirby.com/docs/guide/emails).
+
+> [!INFO]
+> Check the documentation regarding how emails work in [Kirby](https://getkirby.com/docs/guide/emails).
 
 You can pass data into the template using the `$data` parameter.
 
-This method can be useful to help developing email templates:
+This method can be useful to help creating and previewing email templates:
 
 ```php
 // templates/default.php
@@ -115,7 +118,7 @@ This method can be useful to help developing email templates:
 <?= kinky()->transformTemplate('notification', [
     'name' => 'Kinky',
     'text' => 'Oh là là'
-]);
+]); ?>
 ```
 
 ### `email`
@@ -126,9 +129,8 @@ use Kirby\Email\Email;
 kinky()->email(mixed $preset = [], array $props = []): Email
 ```
 
-This method is basically a wrapper around the existing `kirby()->email()`, so it works the same way.
-The only differences is that it transpiles and inlines the Inky components and CSS for you.
-Check the documentation regarding how emails work in [Kirby](https://getkirby.com/docs/guide/emails).
+This method is basically a wrapper around the existing `kirby()->email()` method, so it works the same way.
+The only difference is that it transpiles and inlines the Inky components and CSS for you.
 
 ```php
 // note that the "template" property is required
@@ -157,12 +159,15 @@ kirby()->email([
             'text' => 'Oh là là'
         ])
     ]
-])
+]);
 ```
+
+> [!INFO]
+> Check the documentation regarding how emails work in [Kirby](https://getkirby.com/docs/guide/emails).
 
 ## Cookbook
 
-### Include Custom CSS
+### Custom CSS
 
 To use your own custom CSS, you can just include a `<style>` element in the template and all selectors will be inlined for you.
 
@@ -199,3 +204,20 @@ Result:
     </tr>
 </table>
 ```
+
+## Acknowledgments
+
+Thank you to the authors of these libraries that make this plugin possible:
+
+- [https://github.com/lorenzo/pinky](https://github.com/lorenzo/pinky)
+- [https://github.com/tijsverkoyen/CssToInlineStyles](https://github.com/beebmx/kirby-env)
+
+## Contributing
+
+Any form of contribution to improve this library (including requests) will be welcome and appreciated.
+Make sure to open a pull request or issue.
+
+## License
+
+This project is licensed under the MIT license.
+Please see the [LICENSE](LICENSE) file distributed with this source code for further information regarding copyright and licensing.
