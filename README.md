@@ -93,7 +93,7 @@ Transformed HTML (clean example without the whole document and CSS inlining):
 
 ## Usage
 
-A global `kinky()` method is available to create and send emails.
+A global `kinky()` function is available to create and send emails.
 
 ### `transformTemplate`
 
@@ -104,7 +104,7 @@ kinky()->transformTemplate(string $template, array $data = []): string
 Returns the final transformed HTML from the given `$template`.
 Take into account that email templates must be located in the `/site/templates/emails/` directory.
 
-> [!INFO]
+> [!NOTE]
 > Check the documentation regarding how emails work in [Kirby](https://getkirby.com/docs/guide/emails).
 
 You can pass data into the template using the `$data` parameter.
@@ -162,7 +162,7 @@ kirby()->email([
 ]);
 ```
 
-> [!INFO]
+> [!NOTE]
 > Check the documentation regarding how emails work in [Kirby](https://getkirby.com/docs/guide/emails).
 
 ## Cookbook
