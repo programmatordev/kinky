@@ -8,6 +8,8 @@ Converts simple HTML tags into the complex table required for emails. Oh là là
 
 - [TL;DR](#tldr)
 - [How it Works](#how-it-works)
+- [Requirements](#requirements)
+- [Installation](#installation)
 - [Usage](#usage)
   - [transformTemplate](#transformtemplate)
   - [email](#email)
@@ -89,6 +91,20 @@ Transformed HTML (clean example without the whole document and CSS inlining):
         </td>
     </tr>
 </table>
+```
+
+## Requirements
+
+- PHP `8.2` or higher;
+- PHP [`dom`](http://www.php.net/manual/en/dom.installation.php) extension;
+- Kirby CMS `4.0` or higher.
+
+## Installation
+
+Install the plugin via [Composer](https://getcomposer.org/):
+
+```bash
+composer require programmatordev/kinky
 ```
 
 ## Usage
