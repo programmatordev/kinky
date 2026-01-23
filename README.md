@@ -1,6 +1,6 @@
 # Kinky
 
-[Inky](https://get.foundation/emails/docs/inky.html) email templating language for [Kirby CMS](https://getkirby.com/).
+[Kirby](https://getkirby.com/) + [Inky](https://get.foundation/emails/docs/inky.html) = Kinky.
 
 Converts simple HTML tags into the complex table required for emails. Oh là là!
 
@@ -97,7 +97,7 @@ Transformed HTML (clean example without the whole document and CSS inlining):
 
 - PHP `8.2` or higher;
 - PHP [`dom`](http://www.php.net/manual/en/dom.installation.php) extension;
-- Kirby CMS `4.0` or higher.
+- Kirby CMS `5.0` or higher.
 
 ## Installation
 
@@ -130,7 +130,7 @@ This method can be useful to help creating and previewing email templates:
 ```php
 // templates/default.php
 
-// template will be located at /site/templates/emails/notification.html.php
+// the template will be located at /site/templates/emails/notification.html.php
 <?= kinky()->transformTemplate('notification', [
     'name' => 'Kinky',
     'text' => 'Oh là là'
@@ -162,7 +162,7 @@ kinky()->email([
 ]);
 ```
 
-It is basically the sames as doing the following:
+It is basically the same as doing the following:
 
 ```php
 kirby()->email([
@@ -185,7 +185,7 @@ kirby()->email([
 
 ### Custom CSS
 
-To use your own custom CSS, you can just include a `<style>` element in the template and all selectors will be inlined for you.
+To use your own custom CSS, you can include a `<style>` element in the template and all selectors will be inlined for you.
 
 Template:
 
