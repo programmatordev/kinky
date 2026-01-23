@@ -56,12 +56,12 @@ class Kinky
             throw new InvalidArgumentException('The property "template" is required');
         }
 
-        // set body with transpiled template
-        // important: do not run transformTemplate directly in props or email will be triggered twice for some reason
+        // set the body with the transpiled template
+        // important: do not run transformTemplate directly in props, or the email will be triggered twice for some reason
         $bodyHtml = $this->transformTemplate($template, $data);
         $props['body']['html'] = $bodyHtml;
 
-        // template property must be removed from props at this point
+        // template property must be removed from props at this point,
         // otherwise kirby will ignore the body property
         unset($props['template']);
 
@@ -87,7 +87,7 @@ class Kinky
         // transpile Inky template
         $document = Pinky\transformString($html);
 
-        // create Content-Type <meta> element so charset is detected correctly when inlining CSS
+        // create a Content-Type <meta> element so charset is detected correctly when inlining CSS
         // https://github.com/tijsverkoyen/CssToInlineStyles?tab=readme-ov-file#known-issues
         $metaContentTypeElement = $document->createElement('meta');
         $metaContentTypeElement->setAttribute('http-equiv', 'Content-Type');
@@ -100,13 +100,13 @@ class Kinky
 
         // get Inky base CSS to inject in HTML
         $inkyCss = F::read(__DIR__ . '/../assets/styles/foundation-emails.css');
-        // create <style> element with Inky base CSS
+        // create a <style> element with Inky base CSS
         $styleElement = $document->createElement('style', sprintf("\n%s", $inkyCss));
 
         // prepend the <meta> and <style> elements to the document
         // this may seem a little bit weird to add <head> specific elements directly in the document,
         // but the transpiler and inliner will automatically wrap <meta> and <style> elements in a <head> element,
-        // so there is no need to do it ourselves, and opens the possibility to include custom <style>s directly in the template
+        // so there is no need to do it ourselves, and opens the possibility to include a custom <style> directly in the template
         $document->documentElement->prepend($metaContentTypeElement, $metaViewportElement, $styleElement);
 
         // inline Inky base CSS (for best results in Gmail and Outlook)
