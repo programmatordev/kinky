@@ -3,7 +3,7 @@
   "description": "Inky email templating language for Kirby CMS",
   "type": "kirby-plugin",
   "license": "MIT",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "keywords": ["kirby", "kirby-cms", "kirby-plugin", "inky", "email", "email-template"],
   "homepage": "https://github.com/programmatordev/kinky",
   "support": {

@@ -226,7 +226,7 @@ Result:
 Thank you to the authors of these libraries that make this plugin possible:
 
 - [https://github.com/lorenzo/pinky](https://github.com/lorenzo/pinky)
-- [https://github.com/tijsverkoyen/CssToInlineStyles](https://github.com/beebmx/kirby-env)
+- [https://github.com/tijsverkoyen/CssToInlineStyles](https://github.com/tijsverkoyen/CssToInlineStyles)
 
 ## Contributing
 
